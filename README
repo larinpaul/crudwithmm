@@ -3,3 +3,4 @@ This is a test of making a project with the assistance of Mistral Medium.
 So far, the AI had some minor errors, but they are possible to solve if the coder knows what to do to fix the issues.
 
 Although, there are more "global" problems as well (for example, using @Autowired instead of a constructor injection or a setter injection).
+Also, the AI decided to use Thymeleaf as the template engine.
