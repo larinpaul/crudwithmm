@@ -6,24 +6,31 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.UUID;
 
 @Service
 public class EmployeeService {
 
     private final EmployeeRepository employeeRepository;
-    private final ObjectMapper objectMapper;
 
-    private EmployeeService(EmployeeRepository employeeRepository, ObjectMapper objectMapper) {
+    public EmployeeService(EmployeeRepository employeeRepository) {
         this.employeeRepository = employeeRepository;
-        this.objectMapper = objectMapper;
     }
 
     public List<Employee> getAllEmployees() {
         return employeeRepository.findAll();
     }
 
-    public Employee getEmployeeById(Long id) {
-        EmployeeEn
+    public Employee saveOrUpdateEmployee(Employee employee) {
+        return employeeRepository.save(employee);
+    }
+
+    public Employee getEmployeeById(UUID id) {
+        return employeeRepository.findById(id).orElse(null);
+    }
+
+    public void deleteEmployee(UUID id) {
+        employeeRepository.deleteById(id);
     }
 
 }
