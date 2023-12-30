@@ -2,6 +2,7 @@ package com.example.crudwithmm.service;
 
 import com.example.crudwithmm.entity.Employee;
 import com.example.crudwithmm.repository.EmployeeRepository;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -10,9 +11,11 @@ import java.util.List;
 public class EmployeeService {
 
     private final EmployeeRepository employeeRepository;
+    private final ObjectMapper objectMapper;
 
-    private EmployeeService(EmployeeRepository employeeRepository) {
+    private EmployeeService(EmployeeRepository employeeRepository, ObjectMapper objectMapper) {
         this.employeeRepository = employeeRepository;
+        this.objectMapper = objectMapper;
     }
 
     public List<Employee> getAllEmployees() {
@@ -20,15 +23,7 @@ public class EmployeeService {
     }
 
     public Employee getEmployeeById(Long id) {
-        return employeeRepository.findById(id).orElse(null);
-    }
-
-    public Employee saveOrUpdateEmployee(Employee employee) {
-        return employeeRepository.save(employee);
-    }
-
-    public void deleteEmployee(Long id) {
-        employeeRepository.deleteById(id);
+        EmployeeEn
     }
 
 }

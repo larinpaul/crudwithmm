@@ -2,65 +2,52 @@ package com.example.crudwithmm.controller;
 
 import com.example.crudwithmm.entity.Employee;
 import com.example.crudwithmm.service.EmployeeService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.UUID;
 
-@Controller
+@RestController
 @RequestMapping("/employees")
 public class EmployeeController {
 
-    @Autowired
     private EmployeeService employeeService;
 
+    public EmployeeController(EmployeeService employeeService) {
+        this.employeeService = employeeService;
+    }
+
     @GetMapping("/")
-    public String viewHomePage(Model model) {
-        List<Employee> employeeList = employeeService.getAllEmployees();
-        model.addAttribute("employeeList", employeeList);
-        return "index";
-    }
-
-    @GetMapping("/new")
-    public String showNewEmployeeForm(Model model) {
-        Employee employee = new Employee();
-        model.addAttribute("employee", employee);
-        return "new_employee";
-    }
-
-    @PostMapping("/save")
-    public String saveEmployee(@ModelAttribute("employee") Employee employee) {
-        employeeService.saveOrUpdateEmployee(employee);
-        return "redirect:/employees/";
+    public ResponseEntity<List<Employee>> getAllEmployees() {
+        return new ResponseEntity<>(employeeService.getAllEmployees(), HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
-    public String showEmployeeDetails(@PathVariable("id") Long id, Model model) {
+    public ResponseEntity<Employee> getEmployeeById(@PathVariable("id") UUID id) {
         Employee employee = employeeService.getEmployeeById(id);
-        model.addAttribute("employee", employee);
-        return "employee_details";
+        if (employee == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(employee, HttpStatus.OK);
     }
 
-    @GetMapping("/all")
-    public String showAllEmployees(Model model) {
-        List<Employee> employees  = employeeService.getAllEmployees();
-        model.addAttribute("employees", employees);
-        return "all_employees";
+    @PostMapping("/")
+    public ResponseEntity<Employee> saveEmployee(@RequestBody Employee employee) {
+        return new ResponseEntity<>(employeeService.saveOrUpdateEmployee(employee), HttpStatus.CREATED);
     }
 
-    @GetMapping("/edit/{id}")
-    public String showEditForm(@PathVariable("id") Long id, Model model) {
-        Employee employee = employeeService.getEmployeeById(id);
-        model.addAttribute("employee", employee);
-        return "edit_employee";
+    @PutMapping("/{id}")
+    public ResponseEntity<Employee> updateEmployee(@PathVariable("id") UUID id, @RequestBody Employee employee) {
+        employee.setId(id);
+        return new ResponseEntity<>(employeeService.saveOrUpdateEmployee(employee), HttpStatus.OK);
     }
 
-    @GetMapping("/delete/{id}")
-    public String deleteEmployee(@PathVariable("id") Long id) {
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteEmployee(@PathVariable("id") UUID id) {
         employeeService.deleteEmployee(id);
-        return "redirect:/employees";
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
 }
