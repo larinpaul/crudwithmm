@@ -2,7 +2,6 @@ package com.example.crudwithmm.service;
 
 import com.example.crudwithmm.entity.Employee;
 import com.example.crudwithmm.repository.EmployeeRepository;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
