@@ -21,9 +21,13 @@ public class EmployeeService {
         return employeeRepository.findAll();
     }
 
+//    public Employee getEmployeeById(Long id) {
+//        return employeeRepository.findById(id)
+//                .orElseThrow(() -> new EmployeeNotFoundException("Employee with ID " + id + " not found"));
+//    }
+
     public Employee getEmployeeById(Long id) {
-        return employeeRepository.findById(id)
-                .orElseThrow(() -> new EmployeeNotFoundException("Employee with ID " + id + " not found"));
+        return employeeRepository.findById(id).orElse(null);
     }
 
     public Employee saveOrUpdateEmployee(Employee employee) {
