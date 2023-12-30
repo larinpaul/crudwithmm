@@ -36,8 +36,7 @@ public class EmployeeController {
         return "redirect:/employees/";
     }
 
-    // TODO Doesn't work
-    @GetMapping("/employees/{id}")
+    @GetMapping("/{id}")
     public String showEmployeeDetails(@PathVariable("id") Long id, Model model) {
         Employee employee = employeeService.getEmployeeById(id);
         model.addAttribute("employee", employee);
