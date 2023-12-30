@@ -4,3 +4,5 @@ So far, the AI had some minor errors, but they are possible to solve if the code
 
 Although, there are more "global" problems as well (for example, using @Autowired instead of a constructor injection or a setter injection).
 Also, the AI decided to use Thymeleaf as the template engine.
+
+After a couple of ours, I managed to make the CRUD work with all the waypoints doing what they should. :)
