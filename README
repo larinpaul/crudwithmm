@@ -6,6 +6,8 @@ Although, there are more "global" problems as well (for example, using @Autowire
 Also, the AI decided to use Thymeleaf as the template engine.
 
 After a couple of hours, I managed to make the CRUD work with all the waypoints doing what they should. :)
+
+Testing the endpoints:
 localhost:8080/employees/
 localhost:8080/employees/all
 localhost:8080/employees/1
